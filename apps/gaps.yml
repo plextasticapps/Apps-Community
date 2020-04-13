@@ -43,10 +43,7 @@
       set_fact:
         pg_volumes:
           - '/etc/localtime:/etc/localtime:ro'
-          - '{{path.stdout}}:{{path.stdout}}'
-          - '/mnt:/mnt'
-          - '/opt/appdata/{{pgrole}}:/config'
-          - '/opt/appdata/{{pgrole}}/mp4_automator:/config_mp4_automator'
+          - '/opt/appdata/{{pgrole}}:/usr/data'
 
     - name: 'Setting PG ENV'
       set_fact:
