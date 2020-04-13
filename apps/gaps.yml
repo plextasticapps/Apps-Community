@@ -9,7 +9,7 @@
 - hosts: localhost
   gather_facts: false
   tasks:
-    # FACTS #######################################################################
+ # CORE (MANDATORY) DO NOT CHANGE ###########################################
 
     - name: 'Set Known Facts'
       set_fact:
@@ -18,11 +18,10 @@
         extport: '8484'
         image: 'housewrecker/gaps'
 
-    # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
       include_tasks: '/opt/communityapps/apps/_core.yml'
 
-    # LABELS ######################################################################
+    # LABELS #### KEEPS BOTTOM CLEAN ###########################################
     - name: 'Adding Traefik'
       set_fact:
         pg_labels:
@@ -44,7 +43,10 @@
       set_fact:
         pg_volumes:
           - '/etc/localtime:/etc/localtime:ro'
+          - '{{path.stdout}}:{{path.stdout}}'
+          - '/mnt:/mnt'
           - '/opt/appdata/{{pgrole}}:/config'
+          - '/opt/appdata/{{pgrole}}/mp4_automator:/config_mp4_automator'
 
     - name: 'Setting PG ENV'
       set_fact:
@@ -52,7 +54,7 @@
           PUID: '1000'
           PGID: '1000'
 
-    # MAIN DEPLOYMENT #############################################################
+    # MAIN SCRIPT ##############################################################
 
     - name: 'Deploying {{pgrole}}'
       docker_container:
@@ -70,3 +72,4 @@
               - '{{pgrole}}'
         state: started
         labels: '{{pg_labels}}'
+        
