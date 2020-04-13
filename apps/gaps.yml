@@ -16,7 +16,7 @@
         pgrole: 'gaps'
         intport: '8484'
         extport: '8484'
-        image: 'housewrecker/gaps'
+        image: 'housewrecker/gaps:latest'
 
     - name: 'Including cron job'
       include_tasks: '/opt/communityapps/apps/_core.yml'
